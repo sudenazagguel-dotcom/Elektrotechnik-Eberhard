@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Elektrotechnik Eberhard – Ihr Meisterbetrieb in Herlikofen. Elektroinstallationen, Reparaturen, Notdienst und moderne Gebäudetechnik.">
+    <title>Elektrotechnik Eberhard </title>
+    <!-- Tailwind CSS für modernes, responsives Layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome für barrierefreie, skalierbare Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter für hervorragende Lesbarkeit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="elk.seibold.css" type="text/css" rel="stylesheet" media="screen"/>
+<link rel="icon" type="image/png" href="e-masters.png">
+   </head>
+<body class="min-height-screen flex flex-col">
+
+    <!-- SPRUNGMARKE (Für Tastatur-Navigation unabdingbar) -->
+    <a href="#main-content" class="skip-link">Direkt zum Hauptinhalt springen</a>
+
+    <!-- BARRIEREFREIES ASSISTENZ-PANEL (Steuerungszentrale) -->
+    <section class="bg-slate-900 text-white py-2 px-4 sticky top-0 z-50 border-b border-slate-700 shadow-md" aria-label="Bedienungshilfen">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-sm">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-universal-access text-amber-400 text-lg" aria-hidden="true"></i>
+                <span class="font-bold">Barrierefrei-Helfer:</span>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-3">
+                <!-- Textgröße skalieren -->
+                <div class="flex items-center gap-1 bg-slate-800 rounded p-1">
+                    <span class="px-2 text-xs text-slate-400">Schrift:</span>
+                    <button onclick="changeFontSize(-1)" class="px-2 py-1 bg-slate-700 rounded hover:bg-slate-600 transition" aria-label="Schrift verkleinern">A-</button>
+                    <button onclick="resetFontSize()" class="px-2 py-1 bg-slate-700 rounded hover:bg-slate-600 transition" aria-label="Standard-Schriftgröße">Normal</button>
+                    <button onclick="changeFontSize(1)" class="px-2 py-1 bg-slate-700 rounded hover:bg-slate-600 transition" aria-label="Schrift vergrößern">A+</button>
+                </div>
+
+                <!-- Kontrast-Design umschalten -->
+                <div class="flex items-center gap-1 bg-slate-800 rounded p-1">
+                    <span class="px-2 text-xs text-slate-400">Design:</span>
+                    <button onclick="setTheme('default')" class="px-2 py-1 bg-blue-900 text-white text-xs rounded hover:opacity-90 transition" aria-label="Standard-Design">Standard</button>
+                    <button onclick="setTheme('contrast')" class="px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded hover:opacity-90 transition" aria-label="Gelb-Schwarz Kontrast-Design">Kontrast</button>
+                    <button onclick="setTheme('cream')" class="px-2 py-1 bg-[#fdf6e3] text-[#586e75] text-xs rounded hover:opacity-90 transition" aria-label="Augenschonendes Creme-Design">Creme</button>
+                </div>
+
+                <!-- Dyslexie-Hilfe -->
+                <button onclick="toggleDyslexia()" class="px-3 py-1 bg-slate-800 rounded hover:bg-slate-700 transition flex items-center gap-1 text-xs" aria-label="Lesehilfe für Legasthenie umschalten">
+                    <i class="fa-solid fa-font"></i> Lese-Hilfe
+                </button>
+
+                <!-- Screenreader-Simulator (Web Speech API) -->
+                <button onclick="toggleAudioReader()" id="audio-btn" class="px-3 py-1 bg-emerald-600 text-white rounded hover:bg-emerald-500 transition flex items-center gap-1 text-xs font-semibold" aria-label="Seite laut vorlesen lassen">
+                    <i class="fa-solid fa-volume-high" id="audio-icon"></i> <span id="audio-text">Text vorlesen</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- HEADER & NAVIGATION -->
+    <header class="shadow-sm border-b" style="background-color: var(--bg-card); border-color: rgba(0,0,0,0.1);">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            
+            <!-- Offizielles e-masters & Seibold Partner-Logo Konzept (Als SVG, skalierbar und barrierefrei) -->
+            <div class="flex items-center gap-3">
+                <div class="p-0.5 rounded-lg flex items-center justify-center text-white" style="background-color: var(--primary);" aria-hidden="true">
+                    <!-- Stylischer SVG-Blitz nach dem e-masters Partner-Design -->
+                    <img src="Logo-Eberhard.png" alt="Logo" class="w-20 h-auto">
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold tracking-tight block" style="color: var(--primary);">Elektrotechnik Eberhard</span>
+                    <span class="text-xs uppercase tracking-wider block opacity-75 font-semibold text-slate-500">e-masters Kooperationspartner</span>
+                </div>
+            </div>
+
+            <!-- Hauptnavigation -->
+            <nav aria-label="Hauptnavigation" class="hidden md:flex items-center gap-6">
+                <a href="#services" class="font-medium hover:text-amber-500 transition py-2 nav-link-active">Unsere Leistungen</a>
+                <a href="#calculator" class="font-medium hover:text-amber-500 transition py-2">Kosten-Rechner</a>
+                <a href="#about" class="font-medium hover:text-amber-500 transition py-2">Über uns</a>
+                <a href="#contact" class="font-medium hover:text-amber-500 transition py-2">Kontakt</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <!-- Direkte Telefonnummer nach Fitts' Law (Großes Ziel, leicht erreichbar) -->
+                <a href="tel:07171104466" class="bg-amber-500 text-slate-950 font-bold px-4 py-2.5 rounded-lg hover:bg-amber-400 transition flex items-center gap-2 text-sm shadow shadow-amber-500/20" aria-label="Rufnummer anrufen: 0 7 1 7 1. 1 0 4 4 6 6">
+                    <i class="fa-solid fa-phone-flip text-base" aria-hidden="true"></i>
+                    <span class="hidden lg:inline">07171 104466</span>
+                    <span class="lg:hidden">Anrufen</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN INHALT -->
+    <main id="main-content" class="flex-grow">
+
+        <!-- HERO SECTION (Klare Hierarchie & Handlungsaufforderung) -->
+        <section class="relative py-16 md:py-24 overflow-hidden" style="background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-main) 100%);">
+            <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-100 text-amber-800 border border-amber-300">
+                        <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                        Ihr Elektro-Meisterbetrieb in Schwäbisch Gmünd
+                    </span>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight" style="color: var(--primary); line-height: 1.15;">
+                        Sichere & barrierefreie Elektroinstallationen.
+                    </h1>
+                    <p class="text-lg md:text-xl opacity-90 max-w-xl">
+                        Wir gestalten Elektrotechnik verständlich, sicher und für jeden Menschen optimal nutzbar. Von der Steckdose über PV-Anlagen bis zum smarten barrierefreien Wohnen.
+                    </p>
+                    
+                    <!-- Fitts' Law: Große, kontrastreiche CTAs nebeneinander -->
+                    <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                        <a href="#calculator" class="px-6 py-4 rounded-xl font-bold text-center text-white shadow-lg shadow-blue-900/10 hover:opacity-95 transition" style="background-color: var(--primary);">
+                            <i class="fa-solid fa-calculator mr-2" aria-hidden="true"></i> Online Kosten kalkulieren
+                        </a>
+                        <a href="#contact" class="px-6 py-4 rounded-xl font-bold text-center bg-slate-800 text-white hover:bg-slate-700 transition">
+                            <i class="fa-solid fa-calendar-check mr-2" aria-hidden="true"></i> Termin vereinbaren
+                        </a>
+                    </div>
+
+                    <!-- Notfall-Indikator -->
+                    <div class="p-4 rounded-xl border border-red-200 bg-red-50 flex items-start gap-3 max-w-lg">
+                        <i class="fa-solid fa-triangle-exclamation text-red-600 text-xl mt-0.5" aria-hidden="true"></i>
+                        <div>
+                            <h2 class="font-bold text-red-950 text-sm">Elektro-Notdienst & Störungen</h2>
+                            <p class="text-xs text-red-800 mt-1">Sie haben einen Stromausfall in Herlikofen oder Umgebung? Wählen Sie direkt unsere Notfall-Leitung.</p>
+                        
+                            <!-- 🔴 Button zum direkten Anrufen -->
+                            <a href="tel:017616053429"
+                             class="inline-flex items-center gap-2 mt-3 px-4 py-2 bg-red-600 text-white text-xs font-semibold rounded-lg hover:bg-red-700 transition">
+                            <i class="fa-solid fa-phone text-black"></i>
+                            Jetzt anrufen
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rechter visueller Bereich (Interaktive Illustration statt unpersönlichem Stock-Foto) -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md aspect-square rounded-3xl p-8 flex flex-col justify-between shadow-2xl border border-slate-100" style="background-color: var(--primary);">
+                        <!-- Deko-Elemente -->
+                        <div class="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-amber-400 opacity-20 blur-xl"></div>
+                        <div class="absolute -bottom-10 -left-10 w-36 h-36 rounded-full bg-blue-400 opacity-20 blur-xl"></div>
+
+                        <div class="flex justify-between items-start">
+                            <span class="text-white font-bold text-lg tracking-wider">EBERHARD E-TECHNIK</span>
+                            <i class="fa-solid fa-circle-nodes text-3xl" style="color: var(--accent);" aria-hidden="true"></i>
+                        </div>
+
+                        <!-- Barrierefreies Informations-Widget -->
+                        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/20 text-white space-y-4">
+                            <span class="text-xs font-semibold uppercase tracking-widest text-amber-300 block">Unser Versprechen</span>
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-check-double text-amber-300" aria-hidden="true"></i>
+                                <span class="text-sm">100% Barrierefreie Beratung</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-shield-halved text-amber-300" aria-hidden="true"></i>
+                                <span class="text-sm">Höchste Sicherheitsstandards</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-location-dot text-amber-300" aria-hidden="true"></i>
+                                <span class="text-sm">Direkt vor Ort in Schwäbisch Gmünd</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 text-white">
+                            <span class="text-2xl font-black">e-masters</span>
+                            <span class="text-xs opacity-75">| Meisterbetrieb seit Jahren</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CORE COMPETENCIES / LEISTUNGEN (Hick's Law / Reduktion kognitiver Last) -->
+        <section id="services" class="py-16 max-w-7xl mx-auto px-4" aria-labelledby="services-heading">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 id="services-heading" class="text-3xl font-extrabold tracking-tight">Spezialisierte Elektro-Leistungen</h2>
+                <p class="mt-4 opacity-75">
+                    Wir haben die unübersichtlichen Standardtexte durch drei klare, strukturierte Leistungsbereiche ersetzt. So finden Sie sofort die passende Lösung.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 1. Privatkunden -->
+                <div class="p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition flex flex-col justify-between text-white"
+     style="background-image: url('Steckdose.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                    
+    <div class="relative space-y-4">
+                       
+                        <h3 class="text-xl font-bold">Privathaus & Wohnen</h3>
+                        <p class="text-sm opacity-90 leading-relaxed">
+                            Klassische Elektroinstallationen, zuverlässiger Hausanschluss, Reparaturarbeiten und moderne Lichtgestaltung (LED) für Ihr Wohlfühlzuhause in Schwäbisch Gmünd.
+                        </p>
+                    </div>
+                    <ul class="mt-6 space-y-2.5 text-sm border-t pt-4">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-600" aria-hidden="true"></i> Herdanschluss & Steckdosen</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-600" aria-hidden="true"></i> Überspannungsschutz (Blitzschutz)</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-600" aria-hidden="true"></i> Rauchwarnmelder-Pflege</li>
+                    </ul>
+                </div>
+
+                <!-- 2. Zukunfts-Technologien -->
+                <div class="p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition flex flex-col justify-between text-white"
+     style="background-image: url('wallbox.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+
+                     
+    <div class="relative space-y-4">
+                                                <h3 class="text-xl font-bold">Zukunftstechnologie</h3>
+                        <p class="text-sm opacity-90 leading-relaxed">
+                            Sparen Sie langfristig Energiekosten und laden Sie Ihr Elektroauto direkt zu Hause. Wir begleiten Sie von der Beratung bis zur sicheren Installation.
+                        </p>
+                    </div>
+                    <ul class="mt-6 space-y-2.5 text-sm border-t pt-4">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-600" aria-hidden="true"></i> Wallbox für E-Autos</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-600" aria-hidden="true"></i> Strom-Speicher & PV</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-600" aria-hidden="true"></i> Intelligente Smart Home Planung</li>
+                    </ul>
+                </div>
+
+                <!-- 3. Daten & Gewerbe -->
+                <div class="p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition flex flex-col justify-between text-white"
+     style="background-image: url('sprechanlage.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+
+                    <div class="space-y-4">
+                         
+    <div class="relative space-y-4">
+                        <h3 class="text-xl font-bold">Gewerbe & Netzwerke</h3>
+                        <p class="text-sm opacity-90 leading-relaxed">
+                            Ausfallsichere Datennetzwerke, schnelle Anbindung (WLAN/Kabel) und gesetzlich vorgeschriebene Sicherheitsprüfungen (E-Check) für Unternehmen.
+                        </p>
+                    </div>
+                    <ul class="mt-6 space-y-2.5 text-sm border-t pt-4">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-600" aria-hidden="true"></i> Professionelle Netzwerktechnik</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-600" aria-hidden="true"></i> Sprechanlagen & Zugangskontrolle</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-green-600" aria-hidden="true"></i> Gewerbliche Elektro-Wartung</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERAKTIVER KOSTEN-RECHNER -->
+        <section id="calculator" class="py-16 bg-slate-900 text-white" aria-labelledby="calc-heading">
+            <div class="max-w-4xl mx-auto px-4">
+                <div class="text-center mb-10 space-y-3">
+                    <span class="text-xs uppercase tracking-wider text-amber-400 font-bold block">Digitaler Service</span>
+                    <h2 id="calc-heading" class="text-3xl font-bold">Unverbindlicher Budget-Rechner</h2>
+                    <p class="text-slate-400 text-sm max-w-xl mx-auto">
+                        Planen Sie Ihr Vorhaben barrierefrei und transparent. Berechnen Sie Schätzwerte für Ihre Elektroinstallation mit nur wenigen Klicks.
+                    </p>
+                </div>
+
+                <div class="bg-slate-800 rounded-3xl p-6 md:p-8 border border-slate-700 shadow-xl space-y-8">
+                    <!-- Schritt 1: Projektauswahl -->
+                    <div>
+                        <label for="project-type" class="block text-sm font-semibold text-slate-300 mb-2">1. Was möchten Sie umsetzen?</label>
+                        <select id="project-type" onchange="calculateBudget()" class="w-full p-4 bg-slate-700 border border-slate-600 rounded-xl text-white font-medium">
+                            <option value="wallbox">Wallbox-Installation (E-Mobilität)</option>
+                            <option value="smarthome">Smart Home Modernisierung (Barrierefreies Wohnen)</option>
+                            <option value="echeck">E-Check Sicherheitsprüfung (Wohnung/Haus)</option>
+                            <option value="installation">Standard Elektro-Erweiterung (Steckdosen, Licht)</option>
+                        </select>
+                    </div>
+
+                    <!-- Schritt 2: Spezifische Schieberegler -->
+                    <div class="space-y-4">
+                        <div class="flex justify-between text-sm text-slate-300">
+                            <label id="slider-label" for="project-range" class="font-semibold">Anzahl Ladepunkte / Wohneinheiten:</label>
+                            <span id="slider-value" class="font-bold text-amber-400">1</span>
+                        </div>
+                        <input type="range" id="project-range" min="1" max="10" value="1" oninput="calculateBudget()" class="w-full h-2.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-400">
+                        <div class="flex justify-between text-xs text-slate-500">
+                            <span>Mindestens: 1</span>
+                            <span>Maximal: 10</span>
+                        </div>
+                    </div>
+
+                    <!-- Berechnungsergebnis -->
+                    <div class="bg-slate-950 rounded-2xl p-6 border border-slate-700 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div class="space-y-1">
+                            <span class="text-xs uppercase text-slate-400 block font-semibold">Geschätzter Kostenrahmen</span>
+                            <span id="calc-result" class="text-3xl md:text-4xl font-extrabold text-amber-400 block">850 € - 1.400 €</span>
+                            <span class="text-[11px] text-slate-500 block">Inkl. Installation & Material. Richtwert ohne Gewähr.</span>
+                        </div>
+                        <div class="md:border-l md:border-slate-800 md:pl-6 space-y-2">
+                            <div class="flex items-center gap-2 text-xs text-slate-300">
+                                <i class="fa-solid fa-circle-check text-emerald-400" aria-hidden="true"></i>
+                                <span>KfW-Förderung anwendbar (wenn aktiv)</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-xs text-slate-300">
+                                <i class="fa-solid fa-circle-check text-emerald-400" aria-hidden="true"></i>
+                                <span>Meisterprüfung inklusive Protokoll</span>
+                            </div>
+                            <button onclick="copyToContact()" class="text-xs text-amber-400 hover:underline flex items-center gap-1 font-semibold mt-2">
+                                <i class="fa-solid fa-paste"></i> Dieses Ergebnis in die Anfrage übernehmen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ÜBER UNS / LOKALES VERTRAUEN (SEO & Vertrauensaufbau) -->
+        <section id="about" class="py-16 max-w-7xl mx-auto px-4" aria-labelledby="about-heading">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <span class="text-xs uppercase tracking-wider font-extrabold" style="color: var(--primary);">Tradition & Verantwortung</span>
+                    <h2 id="about-heading" class="text-3xl font-bold tracking-tight">Eberhard Elektroinstallationen</h2>
+                    <p class="opacity-90 leading-relaxed">
+                        Als erfahrener Innungs-Fachbetrieb in Schwäbisch Gmünd-Herlikofen stehen wir für meisterhafte Ausführung und langlebige Sicherheit. Wir verstehen, dass Elektrik Vertrauenssache ist.
+                    </p>
+                    <p class="opacity-90 leading-relaxed">
+                        Besonders am Herzen liegt uns das barrierefreie Wohnen: Wir installieren moderne Systeme, die älteren und mobilitätseingeschränkten Menschen das alltägliche Leben durch smarte Licht- und Steuertechnik spürbar erleichtern.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-6 pt-4 border-t">
+                        <div class="space-y-1">
+                            <span class="text-2xl font-black block" style="color: var(--primary);">73527</span>
+                            <span class="text-xs opacity-75 block font-semibold">Ihr Partner im Raum Gmünd & Herlikofen</span>
+                        </div>
+                        <div class="space-y-1">
+                            <span class="text-2xl font-black block" style="color: var(--primary);">100%</span>
+                            <span class="text-xs opacity-75 block font-semibold">Innungsqualität mit e-masters Support</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 rounded-3xl p-8 border border-amber-200 space-y-6">
+                    <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-amber-500" aria-hidden="true"></i>
+                        Vorteile barrierefreier Elektrotechnik
+                    </h3>
+                    <div class="space-y-4 text-sm text-slate-800">
+                        <div class="flex items-start gap-3">
+                            <div class="mt-1 text-amber-600"><i class="fa-solid fa-circle-dot" aria-hidden="true"></i></div>
+                            <div>
+                                <strong class="block text-slate-950">Ergonomische Platzierung:</strong>
+                                Lichtschalter und Steckdosen auf optimaler, mühelos erreichbarer Höhe (z. B. auch für Rollstuhlfahrer).
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="mt-1 text-amber-600"><i class="fa-solid fa-circle-dot" aria-hidden="true"></i></div>
+                            <div>
+                                <strong class="block text-slate-950">Automatisierung im Alltag:</strong>
+                                Bewegungsmelder, Präsenzmelder und automatische Rollladensteuerungen minimieren physische Barrieren im Haus.
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="mt-1 text-amber-600"><i class="fa-solid fa-circle-dot" aria-hidden="true"></i></div>
+                            <div>
+                                <strong class="block text-slate-950">Intelligente Sicherheit:</strong>
+                                Automatische Herdabschaltung, sensorgesteuerte Notleuchten und modernste Rauchwarnmelder-Vernetzung.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KONTAKTFORMULAR -->
+        <section id="contact" class="py-16 bg-slate-50 border-t" style="background-color: var(--bg-card); border-color: rgba(0,0,0,0.1);" aria-labelledby="contact-heading">
+            <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <div class="lg:col-span-5 space-y-6">
+                    <h2 id="contact-heading" class="text-3xl font-bold tracking-tight">Nehmen Sie Kontakt auf</h2>
+                    <p class="opacity-90 leading-relaxed">
+                        Haben Sie Fragen zu einem Projekt, einer Wallbox oder benötigen Sie eine Beratung zum barrierefreien Wohnen? Schreiben Sie uns oder rufen Sie uns direkt an.
+                    </p>
+
+                    <div class="space-y-4 pt-4 border-t">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 mt-1" aria-hidden="true">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                            </div>
+                            <div>
+                                <span class="font-bold block text-sm">Firmensitz:</span>
+                                <span class="text-sm opacity-95">Gmünder Str. 9<br>73527 Schwäbisch Gmünd - Herlikofen</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 mt-1" aria-hidden="true">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <span class="font-bold block text-sm">E-Mail-Adresse:</span>
+                                <a href="mailto:info@seibold-elektrotechnik.de" class="text-sm text-blue-600 hover:underline">info@eberhard-elektrotechnik.de</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 mt-1" aria-hidden="true">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <span class="font-bold block text-sm">Bürozeiten:</span>
+                                <span class="text-sm opacity-95">Montag - Freitag: 09:00 - 12:00 Uhr<br>und nach individueller Terminvereinbarung</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Barrierefreies Formular mit klaren Label-Assoziationen -->
+                <div class="lg:col-span-7 bg-white p-8 rounded-3xl border shadow-sm" style="background-color: var(--bg-main);">
+                    <form class="space-y-6" onsubmit="handleFormSubmit(event)">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label for="form-name" class="block text-sm font-bold mb-2">Ihr vollständiger Name *</label>
+                                <input type="text" id="form-name" required class="w-full p-4 border rounded-xl bg-white text-slate-900" placeholder="z. B. Max Mustermann">
+                            </div>
+                            <div>
+                                <label for="form-phone" class="block text-sm font-bold mb-2">Telefonnummer für Rückfragen *</label>
+                                <input type="tel" id="form-phone" required class="w-full p-4 border rounded-xl bg-white text-slate-900" placeholder="z. B. 0170 1234567">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="form-email" class="block text-sm font-bold mb-2">E-Mail-Adresse *</label>
+                            <input type="email" id="form-email" required class="w-full p-4 border rounded-xl bg-white text-slate-900" placeholder="z. B. name@beispiel.de">
+                        </div>
+
+                        <div>
+                            <label for="form-message" class="block text-sm font-bold mb-2">Wie können wir Ihnen helfen? *</label>
+                            <textarea id="form-message" rows="5" required class="w-full p-4 border rounded-xl bg-white text-slate-900" placeholder="Beschreiben Sie Ihr Anliegen so genau wie möglich..."></textarea>
+                        </div>
+
+                        <!-- Barrierefreie Bestätigung -->
+                        <div class="flex items-start gap-3">
+                            <input type="checkbox" id="form-privacy" required class="w-5 h-5 rounded mt-0.5 border-slate-300">
+                            <label for="form-privacy" class="text-xs opacity-90">
+                                Ich erkläre mich mit der Verwendung meiner Daten zur Kontaktaufnahme einverstanden (Datenschutzhinweis). *
+                            </label>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 text-white font-bold rounded-xl transition shadow hover:opacity-95" style="background-color: var(--primary);">
+                            <i class="fa-solid fa-paper-plane mr-2" aria-hidden="true"></i> Anfrage jetzt senden
+                        </button>
+                    </form>
+                    
+                    <!-- Simuliertes Feedback-Banner -->
+                    <div id="form-success" class="hidden mt-4 p-4 rounded-xl bg-emerald-100 border border-emerald-300 text-emerald-900 text-center font-bold">
+                        <i class="fa-solid fa-circle-check mr-2"></i> Ihre Anfrage wurde erfolgreich übermittelt! wir melden uns umgehend bei Ihnen.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 text-slate-400 py-12 px-4 border-t border-slate-900" aria-label="Seitenschluss">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
+            
+            <div class="space-y-4">
+                <span class="text-white font-extrabold text-lg block">Elektrotechnik Eberhard</span>
+                <p class="text-xs leading-relaxed max-w-xs">
+                    Innungs-Fachbetrieb & e-masters Kooperationspartner in Schwäbisch Gmünd-Herlikofen. Barrierefrei gestalteter Prototyp für die Hochschule Aalen.
+                </p>
+                <p class="text-[11px] text-amber-500">
+                    © 1995-2026 Eberhard Elektrotechnik. Alle Rechte vorbehalten.
+                </p>
+            </div>
+
+            <div class="space-y-3">
+                <span class="text-white font-bold block text-sm">Projekt-Details (Hochschule Aalen)</span>
+                <ul class="space-y-2 text-xs">
+                    <li>Fokus: Digitale Barrierefreiheit (WCAG 2.1 AA)</li>
+                    <li>Entwickelt für das UX-Modernisierungs-Projekt</li>
+                    <li class="text-amber-400 font-medium">Bestehendes Baukastensystem neu gedacht</li>
+                </ul>
+            </div>
+
+            <div class="space-y-3">
+                <span class="text-white font-bold block text-sm">Rechtliche Pflichtangaben</span>
+                <div class="flex flex-col gap-2 text-xs">
+                    <a href="impressum.html" class="hover:text-white transition">Impressum</a>
+                    <a href="datenschutz.html" class="hover:text-white transition">Datenschutzerklärung</a>
+                    <a href="#" class="hover:text-white transition">Cookie-Einstellungen verwalten</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!--Coockie Banner-->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 text-sm flex justify-between items-center">
+         <span>Wir verwenden Cookies, um unsere Website zu verbessern. Mit der Nutzung stimmen Sie zu.</span>
+        <button onclick="acceptCookies()" class="bg-blue-500 px-3 py-1 rounded">OK</button>
+    </div>
+
+    <!-- INTERAKTIVES JAVASCRIPT FÜR DIE ACCESSIBILITY FEATURES -->
+    <script>
+        // 1. SCHRIFTGRÖSSE REGULIEREN
+        let currentScale = 1.0;
+        function changeFontSize(direction) {
+            currentScale += direction * 0.1;
+            if (currentScale < 0.8) currentScale = 0.8;
+            if (currentScale > 1.6) currentScale = 1.6;
+            document.documentElement.style.fontSize = `${currentScale * 100}%`;
+        }
+        function resetFontSize() {
+            currentScale = 1.0;
+            document.documentElement.style.fontSize = "100%";
+        }
+
+        // 2. THEMENAKTIVIERUNG (KONTRAST UND CREME)
+        function setTheme(theme) {
+            document.body.classList.remove('theme-high-contrast', 'theme-cream');
+            if (theme === 'contrast') {
+                document.body.classList.add('theme-high-contrast');
+            } else if (theme === 'cream') {
+                document.body.classList.add('theme-cream');
+            }
+        }
+
+        // 3. LEGASHENIE-HILFE
+        function toggleDyslexia() {
+            document.body.classList.toggle('dyslexia-friendly');
+        }
+
+        // 4. SCREENREADER SIMULATOR (Web Speech API)
+        let isReading = false;
+        let speechSynth = window.speechSynthesis;
+        let currentUtterance = null;
+        let speakableElements = [];
+        let currentElementIndex = 0;
+
+        function toggleAudioReader() {
+            const btnText = document.getElementById('audio-text');
+            const btnIcon = document.getElementById('audio-icon');
+            const btn = document.getElementById('audio-btn');
+
+            if (isReading) {
+                stopReading();
+            } else {
+                isReading = true;
+                btnText.innerText = "Reader Stoppen";
+                btnIcon.className = "fa-solid fa-circle-stop";
+                btn.classList.replace('bg-emerald-600', 'bg-red-600');
+                btn.classList.replace('hover:bg-emerald-500', 'hover:bg-red-500');
+                
+                // Alle vorlesbaren Texte zusammensuchen
+                gatherSpeakableContent();
+                currentElementIndex = 0;
+                speakNext();
+            }
+        }
+
+        function stopReading() {
+            isReading = false;
+            if (speechSynth) speechSynth.cancel();
+            
+            // Highlightings entfernen
+            document.querySelectorAll('.speak-highlight').forEach(el => {
+                el.classList.remove('speak-highlight');
+            });
+
+            const btnText = document.getElementById('audio-text');
+            const btnIcon = document.getElementById('audio-icon');
+            const btn = document.getElementById('audio-btn');
+            
+            btnText.innerText = "Text vorlesen";
+            btnIcon.className = "fa-solid fa-volume-high";
+            btn.classList.replace('bg-red-600', 'bg-emerald-600');
+            btn.classList.replace('hover:bg-red-500', 'hover:bg-emerald-500');
+        }
+
+        function gatherSpeakableContent() {
+            speakableElements = [];
+            // Hole alle Headings, Paragraphs, Links, Buttons im Main-Bereich
+            const main = document.getElementById('main-content');
+            const elements = main.querySelectorAll('h1, h2, h3, p, label, button, select, option');
+            
+            elements.forEach(el => {
+                let text = el.innerText || el.textContent;
+                text = text.trim();
+                if (text.length > 2 && !el.closest('footer') && !el.closest('section[aria-label="Bedienungshilfen"]')) {
+                    speakableElements.push({
+                        element: el,
+                        text: text
+                    });
+                }
+            });
+        }
+
+        function speakNext() {
+            if (!isReading || currentElementIndex >= speakableElements.length) {
+                stopReading();
+                return;
+            }
+
+            // Altes Highlight entfernen
+            document.querySelectorAll('.speak-highlight').forEach(el => {
+                el.classList.remove('speak-highlight');
+            });
+
+            const currentData = speakableElements[currentElementIndex];
+            const el = currentData.element;
+            
+            // Sichtbares Highlight hinzufügen und in den Fokus scrollen
+            el.classList.add('speak-highlight');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            currentUtterance = new SpeechSynthesisUtterance(currentData.text);
+            currentUtterance.lang = "de-DE";
+            
+            currentUtterance.onend = () => {
+                currentElementIndex++;
+                speakNext();
+            };
+
+            currentUtterance.onerror = () => {
+                stopReading();
+            };
+
+            speechSynth.speak(currentUtterance);
+        }
+
+        // 5. BUDGET RECHNER DYNAMISCHE KALKULATION
+        function calculateBudget() {
+            const projectType = document.getElementById('project-type').value;
+            const rangeInput = document.getElementById('project-range');
+            const rangeVal = parseInt(rangeInput.value);
+            const sliderLabel = document.getElementById('slider-label');
+            const sliderValue = document.getElementById('slider-value');
+            const resultText = document.getElementById('calc-result');
+
+            let minPrice = 0;
+            let maxPrice = 0;
+
+            if (projectType === 'wallbox') {
+                sliderLabel.innerText = "Anzahl installierte Ladepunkte (Wallboxen):";
+                sliderValue.innerText = rangeVal;
+                minPrice = rangeVal * 850;
+                maxPrice = rangeVal * 1400;
+            } else if (projectType === 'smarthome') {
+                sliderLabel.innerText = "Anzahl der ausgestatteten Wohnräume:";
+                sliderValue.innerText = rangeVal;
+                minPrice = rangeVal * 450;
+                maxPrice = rangeVal * 950;
+            } else if (projectType === 'echeck') {
+                sliderLabel.innerText = "Wohnfläche in Quadratmetern (x100 qm):";
+                sliderValue.innerText = `${rangeVal * 50} qm`;
+                minPrice = rangeVal * 150 + 100;
+                maxPrice = rangeVal * 250 + 200;
+            } else if (projectType === 'installation') {
+                sliderLabel.innerText = "Anzahl benötigter Steckdosen / Anschlüsse:";
+                sliderValue.innerText = rangeVal;
+                minPrice = rangeVal * 85 + 50;
+                maxPrice = rangeVal * 140 + 100;
+            }
+
+            resultText.innerText = `${minPrice.toLocaleString('de-DE')} € - ${maxPrice.toLocaleString('de-DE')} €`;
+        }
+
+        // Hilfsfunktion: Übertrage Kalkulator in Formular
+        function copyToContact() {
+            const projectType = document.getElementById('project-type');
+            const projectText = projectType.options[projectType.selectedIndex].text;
+            const sliderValue = document.getElementById('slider-value').innerText;
+            const resultText = document.getElementById('calc-result').innerText;
+
+            const messageBox = document.getElementById('form-message');
+            messageBox.value = `Guten Tag Seibold-Team, ich interessiere mich für folgendes Vorhaben:\n- Projekttyp: ${projectText}\n- Umfang: ${sliderValue}\n- Unverbindliche Online-Kalkulation: ${resultText}\n\nBitte prüfen Sie mein Projekt und senden Sie mir einen Terminvorschlag.`;
+            
+            // Scrolle smooth zum Formular
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            messageBox.focus();
+        }
+
+        // Formular absenden Simulator
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const successBanner = document.getElementById('form-success');
+            successBanner.classList.remove('hidden');
+            
+            // Nach 5 Sekunden ausblenden
+            setTimeout(() => {
+                successBanner.classList.add('hidden');
+            }, 5000);
+
+            event.target.reset();
+        }
+        <!--Coockie Banner-->
+        function acceptCookies() {
+    document.getElementById('cookie-banner').style.display = 'none';
+    localStorage.setItem('cookiesAccepted', 'true');
+}
+
+if (localStorage.getItem('cookiesAccepted')) {
+    document.getElementById('cookie-banner').style.display = 'none';
+}
+
+        // Starte Initial-Kalkulation
+        calculateBudget();
+    </script>
+</body>
+</html>

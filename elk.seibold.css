@@ -1,0 +1,97 @@
+/* ==========================================================================
+   CSS3 STYLESHEET - ELEKTROTECHNIK SEIBOLD PROTOTYP (HOCHSCHULE AALEN)
+      ========================================================================== */
+
+/* SYSTEM-VARIABLEN (Standard-CI: e-masters Reflex-Blau & Gold) */
+:root {
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --primary: #0f4c81;     /* e-masters Original Reflex-Blau */
+    --accent: #f59e0b;      /* e-masters Original Gold-Gelb / Bernstein */
+    --brand-red: #c01d24;   /* Original Seibold-Rot (Innungs-Identität) */
+    --focus-ring: #2563eb;
+    --font-family: 'Inter', sans-serif;
+    --letter-spacing: normal;
+    --line-height: 1.6;
+}
+
+/* 1. KONTRAST-MODUS (WCAG 2.1 AAA - Schwarz/Gelb für Sehbehinderte) */
+body.theme-high-contrast {
+    --bg-main: #000000;
+    --bg-card: #121212;
+    --text-main: #ffffff;
+    --text-muted: #e2e8f0;
+    --primary: #ffff00;     /* Reines Gelb für maximalen Kontrast */
+    --accent: #ffff00;
+    --focus-ring: #ffff00;
+}
+body.theme-high-contrast * {
+    border-color: #ffff00 !important;
+}
+
+/* 2. CREME-MODUS (Reduziert blaues Licht, augenschonend für Migräne-Betroffene) */
+body.theme-cream {
+    --bg-main: #fdf6e3;
+    --bg-card: #eee8d5;
+    --text-main: #586e75;
+    --text-muted: #657b83;
+    --primary: #b58900;
+    --accent: #cb4b16;
+    --focus-ring: #268bd2;
+}
+
+/* 3. DYSLEXIE-FREUNDLICHE SCHRIFT (Erhöhter Zeichenabstand gegen "Verschwimmen") */
+body.dyslexia-friendly {
+    --font-family: 'Inter', sans-serif;
+    --letter-spacing: 0.15em;
+    --line-height: 1.9;
+    word-spacing: 0.18em;
+}
+
+/* ALLGEMEINES STYLING & TRANSITIONS */
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-family);
+    letter-spacing: var(--letter-spacing);
+    line-height: var(--line-height);
+    transition: all 0.25s ease;
+}
+
+/* Tastatur-Fokus-Indikatoren (Für blinde und motorisch eingeschränkte Nutzer unumgänglich) */
+*:focus-visible {
+    outline: 4px solid var(--focus-ring) !important;
+    outline-offset: 4px !important;
+}
+
+/* Tastatur-Sprungmarke (Skip-Link) */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #000;
+    padding: 10px 20px;
+    z-index: 100;
+    font-weight: bold;
+    border-radius: 0 0 8px 8px;
+    transition: top 0.2s;
+}
+.skip-link:focus {
+    top: 0;
+}
+
+/* Aktiver Link im Navigations-Menü */
+.nav-link-active {
+    border-bottom: 3px solid var(--accent);
+}
+
+/* Screenreader-Simulator Highlight-Effekt (Gelbe Live-Markierung beim Vorlesen) */
+.speak-highlight {
+    background-color: rgba(245, 158, 11, 0.3);
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
