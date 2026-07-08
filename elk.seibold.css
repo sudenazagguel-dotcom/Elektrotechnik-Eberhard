@@ -17,6 +17,33 @@
     --line-height: 1.6;
 }
 
+/* Hamburger-Menü oben rechts im Barrierefrei-Helfer */
+#menu-toggle {
+    position: absolute;
+    top: 0.75rem;       /* Abstand von oben */
+    right: 1rem;        /* Abstand von rechts */
+    color: #ffffff;     /* Schriftfarbe weiß */
+    cursor: pointer;
+    z-index: 1000;      /* Damit es über anderen Elementen liegt */
+}
+
+/* Optional: Hover-Effekt */
+#menu-toggle:hover {
+    opacity: 0.8;
+}
+
+/* Mobile Navigation Styling */
+#mobile-nav {
+    position: absolute;
+    top: 3.5rem;        /* direkt unter dem Helfer-Bereich */
+    right: 1rem;
+    background-color: #ffffff; /* weißer Hintergrund */
+    color: #000000;            /* schwarze Schrift */
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
 /* 1. KONTRAST-MODUS (WCAG 2.1 AAA - Schwarz/Gelb für Sehbehinderte) */
 body.theme-high-contrast {
     --bg-main: #000000;
@@ -26,10 +53,31 @@ body.theme-high-contrast {
     --primary: #ffff00;     /* Reines Gelb für maximalen Kontrast */
     --accent: #ffff00;
     --focus-ring: #ffff00;
+    body.theme-high-contrast .btn-yellow,
+body.theme-high-contrast .bg-yellow-400 {
+    color: #000000 !important; /* Schwarze Schrift im Kontrastmodus */}
+    
 }
 body.theme-high-contrast * {
     border-color: #ffff00 !important;
 }
+
+/* Schrift im rechten Bereich NUR im Kontrastmodus schwarz */
+body.theme-high-contrast .right-widget,
+body.theme-high-contrast .right-widget * {
+    color: #000000 !important;
+}
+
+/* Button-Schrift NUR im Kontrastmodus schwarz */
+body.theme-high-contrast a[href="#calculator"] {
+    color: #000000 !important;
+}
+
+/* Schriftfarbe des Senden-Buttons nur im Kontrastmodus schwarz */
+body.theme-high-contrast button[type="submit"] {
+    color: #000000 !important;
+}
+
 
 /* 2. CREME-MODUS (Reduziert blaues Licht, augenschonend für Migräne-Betroffene) */
 body.theme-cream {
