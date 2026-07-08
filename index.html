@@ -56,7 +56,22 @@
                     <i class="fa-solid fa-volume-high" id="audio-icon"></i> <span id="audio-text">Text vorlesen</span>
                 </button>
             </div>
-        </div>
+
+             <!-- Hamburger Button (nur auf Handy sichtbar) -->
+                    <button id="menu-toggle" class="md:hidden text-3xl text-slate-800">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                <div> <!-- Mobile Navigation -->
+                <nav id="mobile-nav" class="hidden flex-col gap-4 mt-4 md:hidden text-slate-800 font-semibold">
+                    <ul class="flex flex-col gap-2 list-disc list-inside">
+                        <li><a href="#services" class="hover:text-amber-500 transition py-2">Unsere Leistungen</a></li>
+                        <li><a href="#calculator" class="hover:text-amber-500 transition py-2">Kosten-Rechner</a></li>
+                    <li><a href="#about" class="hover:text-amber-500 transition py-2">Über uns</a></li>
+                    <li><a href="#contact" class="hover:text-amber-500 transition py-2">Kontakt</a></li>
+                    </ul>
+
+                </div>
     </section>
 
     <!-- HEADER & NAVIGATION -->
@@ -75,15 +90,7 @@
                 </div>
             </div>
 
-            <!-- Hauptnavigation -->
-            <nav aria-label="Hauptnavigation" class="hidden md:flex items-center gap-6">
-                <a href="#services" class="font-medium hover:text-amber-500 transition py-2 nav-link-active">Unsere Leistungen</a>
-                <a href="#calculator" class="font-medium hover:text-amber-500 transition py-2">Kosten-Rechner</a>
-                <a href="#about" class="font-medium hover:text-amber-500 transition py-2">Über uns</a>
-                <a href="#contact" class="font-medium hover:text-amber-500 transition py-2">Kontakt</a>
-            </nav>
-
-            <div class="flex items-center gap-3">
+             <div class="flex items-center gap-3">
                 <!-- Direkte Telefonnummer nach Fitts' Law (Großes Ziel, leicht erreichbar) -->
                 <a href="tel:07171104466" class="bg-amber-500 text-slate-950 font-bold px-4 py-2.5 rounded-lg hover:bg-amber-400 transition flex items-center gap-2 text-sm shadow shadow-amber-500/20" aria-label="Rufnummer anrufen: 0 7 1 7 1. 1 0 4 4 6 6">
                     <i class="fa-solid fa-phone-flip text-base" aria-hidden="true"></i>
@@ -91,6 +98,15 @@
                     <span class="lg:hidden">Anrufen</span>
                 </a>
             </div>
+
+            <!-- Hauptnavigation -->
+            <nav aria-label="Hauptnavigation" class="hidden md:flex items-center gap-6">
+                <a href="#services" class="font-medium hover:text-amber-500 transition py-2 nav-link-active">Unsere Leistungen</a>
+                <a href="#calculator" class="font-medium hover:text-amber-500 transition py-2">Kosten-Rechner</a>
+                <a href="#about" class="font-medium hover:text-amber-500 transition py-2">Über uns</a>
+                <a href="#contact" class="font-medium hover:text-amber-500 transition py-2">Kontakt</a>
+             </nav>
+    
         </div>
     </header>
 
@@ -114,9 +130,10 @@
                     
                     <!-- Fitts' Law: Große, kontrastreiche CTAs nebeneinander -->
                     <div class="flex flex-col sm:flex-row gap-4 pt-2">
-                        <a href="#calculator" class="px-6 py-4 rounded-xl font-bold text-center text-white shadow-lg shadow-blue-900/10 hover:opacity-95 transition" style="background-color: var(--primary);">
-                            <i class="fa-solid fa-calculator mr-2" aria-hidden="true"></i> Online Kosten kalkulieren
+                       <a href="#calculator" class="px-6 py-4 rounded-xl font-bold text-center text-white shadow-lg shadow-blue-900/10 hover:opacity-95 transition" style="background-color: var(--primary);">
+                             <i class="fa-solid fa-calculator mr-2" aria-hidden="true"></i> Online Kosten kalkulieren
                         </a>
+
                         <a href="#contact" class="px-6 py-4 rounded-xl font-bold text-center bg-slate-800 text-white hover:bg-slate-700 transition">
                             <i class="fa-solid fa-calendar-check mr-2" aria-hidden="true"></i> Termin vereinbaren
                         </a>
@@ -141,7 +158,7 @@
 
                 <!-- Rechter visueller Bereich (Interaktive Illustration statt unpersönlichem Stock-Foto) -->
                 <div class="lg:col-span-5 flex justify-center">
-                    <div class="relative w-full max-w-md aspect-square rounded-3xl p-8 flex flex-col justify-between shadow-2xl border border-slate-100" style="background-color: var(--primary);">
+                    <div class="right-widget relative w-full max-w-md aspect-square rounded-3xl p-8 flex flex-col justify-between shadow-2xl border border-slate-100" style="background-color: var(--primary);">
                         <!-- Deko-Elemente -->
                         <div class="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-amber-400 opacity-20 blur-xl"></div>
                         <div class="absolute -bottom-10 -left-10 w-36 h-36 rounded-full bg-blue-400 opacity-20 blur-xl"></div>
@@ -699,6 +716,14 @@ if (localStorage.getItem('cookiesAccepted')) {
 
         // Starte Initial-Kalkulation
         calculateBudget();
+
+         const toggle = document.getElementById('menu-toggle');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    toggle.addEventListener('click', () => {
+        mobileNav.classList.toggle('hidden');
+    });
+    
     </script>
 </body>
 </html>
